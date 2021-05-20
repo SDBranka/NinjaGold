@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid red; */
+}
+
+#wrapper {
+    width: 600px;
+    margin: 100px auto;
+    background: white;
+    border: 3px solid rgb(21, 21, 85);
+    background: skyblue;
+    font-size: 27px;
+}
+
+p {
+    padding: 10px;
+}
+
+input {
+    font-size: 27px;
+}
+
+#goal_input{
+    margin-left: 105px;
+}
+
+#turns_input {
+    margin: 24px;
+}
+
+button {
+    padding: 5px;
+    border-radius: 9px;
+    margin: 0px 0px 10px 500px;
+}

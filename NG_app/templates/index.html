@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Ninja Gold</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+    <body>
+        <div id="wrapper">
+            <form class="form" action="/game_setup" method="POST">
+                {% csrf_token %}
+                <p>Goal for gold: <input id="goal_input" type="text" name= "goal" required></p>
+                <p>Max number of turns: <input id="turns_input" type="text" name= "turns" required></p>    
+                <button type="submit">Begin Game</button>
+            </form>
+        </div>          <!--end wrapper-->
+    </body>
+</html>

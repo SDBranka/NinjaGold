@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid red; */
+}
+
+body {
+    background-image: url("../img/farming.jpg");
+    height: full;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#wrapper {
+    width: 909px;
+    margin: 100px auto;
+    background: white;
+    padding-top: 10px;
+}
+
+
+#stats {
+    font-size: 19px;
+    margin: 9px 0px 12px 0;
+}
+
+#stats span {
+    border: 2px solid rgb(0, 119, 255);
+    padding: 5px;
+}
+
+#actions {
+    display: flex;
+    text-align: center;
+}
+
+.pod {
+    padding: 10px;
+    margin: 10px;
+    flex: 1;
+    border: 2px solid seagreen;
+}
+
+.pod p {
+    margin: 10px 0px;
+}
+
+button {
+    padding: 5px;
+    border-radius: 9px;
+}
+
+#actFeed {
+    margin: 0px 0px 10px 12px;
+}
+
+#resetBtn {
+    margin: 0px 0px 10px 850px
+}

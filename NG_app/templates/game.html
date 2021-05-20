@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Ninja Gold</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/game.css' %}">
+        <!-- <link rel="stylesheet" href="../static/css/style.css" -->
+    </head>
+    <body>
+        <div id="wrapper">
+            <p id="stats">Your Gold: <span>{{ request.session.gold }}</span></p>
+            <div id="actions">
+                <div class="pod">
+                    <h3>Farm</h3>
+                    <p>(earns 10-20 golds)</p>
+                    <form class="form" action="/process_money" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="location" value="Farm">          <!--The hidden field is not shown to the user, but the data is sent when the form is submitted.-->
+                        <button class="btn" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+                <div class="pod">
+                    <h3>Cave</h3>
+                    <p>(earns 5-10 golds)</p>
+                    <form class="form" action="/process_money" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="location" value="Cave">        
+                        <button class="btn" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+                <div class="pod">
+                    <h3>House</h3>
+                    <p>(earns 2-5 golds)</p>
+                    <form class="form" action="/process_money" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="location" value="House">
+                        <button class="btn" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+                <div class="pod">
+                    <h3>Casino</h3>
+                    <p>(earns/takes 0-50 golds)</p>
+                    <form class="form" action="/process_money" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="location" value="Casino">
+                        <button class="btn" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+            </div>      <!--end actions-->
+            <p>Activities</p>
+            <textarea id="actFeed" rows="7" cols="110">
+                {% for action in request.session.feed %}
+                {{ action }}
+                {% endfor %}
+            </textarea>
+            <button id="resetBtn"><a href="/reset">Reset</a></button>
+        </div>      <!--end wrapper-->  
+        
+    </body>
+</html>
