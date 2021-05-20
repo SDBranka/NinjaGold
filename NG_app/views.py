@@ -55,7 +55,7 @@ def process_money(request):
                     request.session['gold'] += amount
                     request.session['feed'].append(f"Entered a casino and lost {amount} golds... Ouch. {strftime('%Y/%m/%d %H:%M %p', gmtime())}")
             return redirect("/game")
-        if int(request.session['goal']) < int(request.session['gold']):
+        elif int(request.session['goal']) < int(request.session['gold']):
             return redirect("/win")
         elif int(request.session['turns']) == len(request.session['feed']):
             return redirect("/lose")
