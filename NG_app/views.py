@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 import random
 from time import gmtime, strftime
 
-# Create your views here.
-
 def index(request):
     request.session['gold'] = 0
     request.session['feed'] = []
@@ -11,10 +9,11 @@ def index(request):
 
 def game_setup(request):
     if request.method == "POST":
-        request.session['goal'] = request.POST['goal']
-        request.session['turns'] = request.POST['turns']
+        request.session['goal'] = int(request.POST['goal'])
+        request.session['turns'] = int(request.POST['turns'])
         request.session['gold'] = 0
         request.session['feed'] = []
+        request.session['turn_count'] = 0
         return redirect("/game")
     else:
         return redirect("/")
@@ -27,38 +26,40 @@ def game(request):
 
 def process_money(request):
     if request.method == "POST":
-        if int(request.session['gold']) < int(request.session['goal']) and int(request.session['turns']) > len(request.session['feed']):
+        if request.session['gold'] < request.session['goal'] and request.session['turns'] > 0:
         # x = strftime'(%Y/%m/%d %H:%M %p', gmtime())
             if request.POST['location'] == "Farm":
                 amount = random.randint(10, 20)
-                print(f"Amount is: {amount}")
-                print(f"len of feed: {len(request.session['feed'])}")
                 request.session['gold'] += amount
                 request.session['feed'].append(f"Earned {amount} golds from the farm! {strftime('%Y/%m/%d %H:%M %p', gmtime())}")
-            if request.POST['location'] == "Cave":
+                request.session['turns'] -= 1
+                request.session['turn_count'] +=1
+            elif request.POST['location'] == "Cave":
                 amount= random.randint(5, 10)
                 request.session['gold'] += amount
-                print(f"Amount is: {amount}")
                 request.session['feed'].append(f"Earned {amount} golds from the cave! {strftime('%Y/%m/%d %H:%M %p', gmtime())}")
-            if request.POST['location'] == "House":
+                request.session['turns'] -= 1
+                request.session['turn_count'] +=1
+            elif request.POST['location'] == "House":
                 amount = random.randint(2, 5)
                 request.session['gold'] += amount
-                print(f"Amount is: {amount}")
                 request.session['feed'].append(f"Earned {amount} golds from the house! {strftime('%Y/%m/%d %H:%M %p', gmtime())}")
-            if request.POST['location'] == "Casino":
+                request.session['turns'] -= 1
+                request.session['turn_count'] +=1
+            elif request.POST['location'] == "Casino":
                 amount = random.randint(-50, 50)
+                request.session['gold'] += amount
+                request.session['turns'] -= 1
+                request.session['turn_count'] +=1
                 if amount > -1:
-                    request.session['gold'] += amount
-                    print(f"Amount is: {amount}")
                     request.session['feed'].append(f"Earned {amount} golds from the casino! {strftime('%Y/%m/%d %H:%M %p', gmtime())}")
                 else:
-                    request.session['gold'] += amount
-                    request.session['feed'].append(f"Entered a casino and lost {amount} golds... Ouch. {strftime('%Y/%m/%d %H:%M %p', gmtime())}")
+                    request.session['feed'].append(f"Entered a casino and lost {amount} golds... Ouch. {strftime('%Y/%m/%d %H:%M %p', gmtime())}")                
+            if request.session['goal'] < request.session['gold']:
+                return redirect("/win")
+            if request.session['turns'] == 0:
+                return redirect("/lose")
             return redirect("/game")
-        elif int(request.session['goal']) < int(request.session['gold']):
-            return redirect("/win")
-        elif int(request.session['turns']) == len(request.session['feed']):
-            return redirect("/lose")
     else:
         return redirect("/game")
 
@@ -69,7 +70,4 @@ def lose(request):
     return render(request, "lose.html")
 
 def reset(request):
-    # request.session.clear()
-    # request.session['gold'] = 0
-    # request.session['feed'] = []
     return redirect("/")

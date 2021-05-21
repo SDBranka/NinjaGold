@@ -12,6 +12,7 @@
     <body>
         <div id="wrapper">
             <img src="../static/img/winner.gif" alt="winner">
+            <p>You Win!!! You earned {{ request.session.gold }} gold in {{ request.session.turn_count }} turns!</p>
             <div><button><a href="/">Try again</a></button></div>
         </div>
     </body>
