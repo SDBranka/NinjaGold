@@ -61,7 +61,7 @@ def process_money(request):
                 return redirect("/lose")
             return redirect("/game")
     else:
-        return redirect("/game")
+        return redirect("/")
 
 def win(request):
     return render(request, "win.html")
